@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق احجزلي ⏱️ | نظام حجز المواعيد الفورية</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">⏱️ احجزلي Pro</div>
+        <div class="nav-modes">
+            <button id="btn-customer-mode" class="nav-btn active" onclick="switchMode('customer')">واجهة الزبون</button>
+            <button id="btn-merchant-mode" class="nav-btn" onclick="switchMode('merchant')">لوحة تحكم المحل</button>
+        </div>
+    </nav>
+
+    <!-- واجهة الزبون -->
+    <main id="customer-view" class="container">
+        <header class="hero">
+            <h1>احجز موعدك فوراً وبدون انتظار</h1>
+            <p>اختر مركزك المفضل، حدد الوقت المناسب، واضمن دورك بضغطة زر</p>
+        </header>
+
+        <section class="card">
+            <h2>1. اختر مقدم الخدمة</h2>
+            <div class="form-group">
+                <select id="shop-select" onchange="onShopChange()">
+                    <option value="">-- اضغط للاختيار من القائمة --</option>
+                    <option value="shop1">صالون الأناقة الرجالي (طرابلس - حي الأندلس)</option>
+                    <option value="shop2">مركز الفحص الفني وتلميع السيارات (بنغازي)</option>
+                    <option value="shop3">عيادة الشفاء لطب الأسنان (مصراتة)</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="booking-section" class="card hidden">
+            <h2>2. المواعيد المتاحة اليوم</h2>
+            <div id="time-slots" class="slots-grid"></div>
+
+            <h2 class="mt-20">3. تأكيد الحجز</h2>
+            <div class="booking-form">
+                <div class="form-group">
+                    <input type="text" id="cust-name" placeholder="الاسم بالكامل">
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="cust-phone" placeholder="رقم الهاتف (091 / 092 / 094)">
+                </div>
+                <button class="btn-primary" onclick="submitBooking()">تأكيد الحجز الفوري وإرسال تنبيه</button>
+            </div>
+        </section>
+
+        <section id="success-screen" class="card text-center hidden">
+            <div class="success-icon">🎉</div>
+            <h2>تم حجز موعدك بنجاح!</h2>
+            <p id="success-text"></p>
+            <button class="btn-secondary" onclick="resetCustomerView()">حجز موعد جديد</button>
+        </section>
+    </main>
+
+    <!-- لوحة تحكم المحل -->
+    <main id="merchant-view" class="container hidden">
+        <header class="hero">
+            <h1>لوحة تحكم التاجر ومتابعة المواعيد</h1>
+            <p>تابع حجوزات زبائنك حياً وتلقى الإشعارات الفورية</p>
+        </header>
+
+        <section class="card">
+            <h2>اختر المحل الخاص بك للمتابعة:</h2>
+            <div class="form-group">
+                <select id="merchant-shop-select" onchange="loadMerchantBookings()">
+                    <option value="shop1">صالون الأناقة الرجالي</option>
+                    <option value="shop2">مركز الفحص الفني وتلميع السيارات</option>
+                    <option value="shop3">عيادة الشفاء لطب الأسنان</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>جدول الحجوزات الواردة لليوم</h2>
+            <div class="table-responsive">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>الوقت</th>
+                            <th>اسم الزبون</th>
+                            <th>رقم الهاتف</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="merchant-bookings-list">
+                        <!-- تظهر المواعيد هنا -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
